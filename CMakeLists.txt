@@ -6,6 +6,10 @@ option(test "Build all tests" ON)
 enable_testing()
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
+if(APPLE)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DGTEST_USE_OWN_TR1_TUPLE=1")
+endif(APPLE)
+
 include(${PROJECT_SOURCE_DIR}/cmake/Utils.cmake)
 
 include_directories(
