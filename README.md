@@ -1,6 +1,6 @@
 # AMT-MOD
 
-Travis CI: [![Build Status](https://travis-ci.org/tinysky-glm/AMT-MOD.svg?branch=master)](https://travis-ci.org/tinysky-glm/AMT-MOD)
+[![Build Status](https://travis-ci.org/tinysky-glm/AMT-MOD.svg?branch=master)](https://travis-ci.org/tinysky-glm/AMT-MOD)
 
 
 ## Introduction
