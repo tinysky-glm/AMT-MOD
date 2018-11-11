@@ -4,33 +4,134 @@
  */
 #include "mod/gui/frame.h"
 
+#include <sstream>
+
+#include <QDialog>
+
+namespace {
+int kMapCanvasWidth = 1024;
+int kMapCanvasHeight = 768;
+int kFrameWidth = 1200;
+int kFrameHeight = 768;
+std::string kMapApiUrl = "http://api.map.baidu.com/staticimage?";
+int kMaxZoom = 18;
+int kMinZoom = 11;
+}  // namespace
+
 namespace mod {
 
-Frame::Frame() {
+Frame::Frame() : zoom_level_(12), center_lon_(-122.49), center_lat_(48.50) {
+  main_layout_ = new QBoxLayout(QBoxLayout::LeftToRight, this);
+  setLayout(main_layout_);
+
+  // create map canvas
   CreateMapCanvas();
+  // create menu
   CreateMenus();
+
+  setMinimumSize(kFrameWidth, kFrameHeight);
   setWindowTitle(tr("AMT-MOD"));
+
+  // update display
+  Update();
 }
 
 void Frame::CreateMapCanvas() {
-  web_view_ = new QWebEngineView();
-  setCentralWidget(web_view_);
-  //web_view_->load(QUrl("http://api.map.baidu.com/staticimage?center=116.38,39.90&zoom=12&width=1024&height=768"));
-  web_view_->load(QUrl("http://api.map.baidu.com/staticimage?center=-122.49,48.50&zoom=11&width=1024&height=768"));
+  web_view_ = new QWebEngineView(this);
+  web_view_->setMinimumSize(kMapCanvasWidth, kMapCanvasHeight);
+  web_view_->setMaximumSize(kMapCanvasWidth, kMapCanvasHeight);
+  main_layout_->addWidget(web_view_);
 }
 
+
 void Frame::CreateMenus() {
+  // file menu
   file_menu_ = menuBar()->addMenu(tr("&File"));
-  open_act_ = new QAction(tr("&Open..."), this);
+  open_act_ = new QAction(tr("&Open Layer..."), this);
   file_menu_->addAction(open_act_);
 
+  // view menu
+  view_menu_ = menuBar()->addMenu(tr("&View"));
+  left_act_ = new QAction(tr("Left"), this);
+  connect(left_act_, &QAction::triggered, this, &Frame::MoveLeft);
+
+  view_menu_->addAction(left_act_);
+  right_act_ = new QAction(tr("Right"), this);
+  connect(right_act_, &QAction::triggered, this, &Frame::MoveRight);
+
+  view_menu_->addAction(right_act_);
+  up_act_ = new QAction(tr("Up"), this);
+  connect(up_act_, &QAction::triggered, this, &Frame::MoveUp);
+
+  view_menu_->addAction(up_act_);
+  down_act_ = new QAction(tr("Down"), this);
+  connect(down_act_, &QAction::triggered, this, &Frame::MoveDown);
+
+  view_menu_->addAction(down_act_);
+  zoomin_act_ = new QAction(tr("ZoomIn"), this);
+  connect(zoomin_act_, &QAction::triggered, this, &Frame::ZoomIn);
+
+  view_menu_->addAction(zoomin_act_);
+  zoomout_act_ = new QAction(tr("ZoomOut"), this);
+  view_menu_->addAction(zoomout_act_);
+  connect(zoomout_act_, &QAction::triggered, this, &Frame::ZoomOut);
+
+
+  // tool menu
   tool_menu_ = menuBar()->addMenu(tr("&Tool"));
   txt2shp_act_ = new QAction(tr("&Txt2Shp..."), this);
   tool_menu_->addAction(txt2shp_act_);
   connect(txt2shp_act_, &QAction::triggered, this, &Frame::Txt2Shp);
 }
 
+void Frame::MoveLeft() {
+  this->center_lon_ -= 0.1;
+  Update();
+}
+
+void Frame::MoveRight() {
+  this->center_lon_ += 0.1;
+  Update();
+}
+
+void Frame::MoveUp() {
+  this->center_lat_ += 0.1;
+  Update();
+}
+
+void Frame::MoveDown() {
+  this->center_lat_ -= 0.1;
+  Update();
+}
+
+void Frame::ZoomIn() {
+  if (zoom_level_ >= kMaxZoom) return;
+  zoom_level_++;
+  Update();
+}
+
+void Frame::ZoomOut() {
+  if (zoom_level_ <= kMinZoom) return;
+  zoom_level_--;
+  Update();
+}
+
 void Frame::Txt2Shp() {
+}
+
+void Frame::Update() {
+  // Step1: update map canvas
+  std::stringstream ss;
+  ss << kMapApiUrl
+     << "width=" << kMapCanvasWidth
+     << "&height=" << kMapCanvasHeight
+     << "&zoom=" << zoom_level_
+     << "&center=" << center_lon_ << "," << center_lat_;
+  web_view_->load(QUrl(ss.str().c_str()));
+
+  // Step2: update POD/Roads
+
+  // Step3: update trajectories
 }
 
 }  // namespace mod
