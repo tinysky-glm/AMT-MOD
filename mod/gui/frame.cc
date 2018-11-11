@@ -7,15 +7,25 @@
 #include <sstream>
 
 #include <QDialog>
+#include <QFileDialog>
 
 namespace {
+// The map canvas width
 int kMapCanvasWidth = 1024;
+// The map canva height
 int kMapCanvasHeight = 768;
+// The AMT-MOD Frame width
 int kFrameWidth = 1200;
+// The AMT-MOD Frame height
 int kFrameHeight = 768;
+// The map api url, AMT-MOD use Baidu Map API
 std::string kMapApiUrl = "http://api.map.baidu.com/staticimage?";
+// The map max zoom level
 int kMaxZoom = 18;
+// The map min zoom level
 int kMinZoom = 11;
+// The map move span
+double kMapMoveSpan = 0.1;
 }  // namespace
 
 namespace mod {
@@ -30,7 +40,7 @@ Frame::Frame() : zoom_level_(12), center_lon_(-122.49), center_lat_(48.50) {
   CreateMenus();
 
   setMinimumSize(kFrameWidth, kFrameHeight);
-  setWindowTitle(tr("AMT-MOD"));
+  setWindowTitle(tr("AMT-MOD BJUT"));
 
   // update display
   Update();
@@ -85,22 +95,22 @@ void Frame::CreateMenus() {
 }
 
 void Frame::MoveLeft() {
-  this->center_lon_ -= 0.1;
+  this->center_lon_ -= kMapMoveSpan;
   Update();
 }
 
 void Frame::MoveRight() {
-  this->center_lon_ += 0.1;
+  this->center_lon_ += kMapMoveSpan;
   Update();
 }
 
 void Frame::MoveUp() {
-  this->center_lat_ += 0.1;
+  this->center_lat_ += kMapMoveSpan;
   Update();
 }
 
 void Frame::MoveDown() {
-  this->center_lat_ -= 0.1;
+  this->center_lat_ -= kMapMoveSpan;
   Update();
 }
 
