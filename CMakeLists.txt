@@ -4,9 +4,7 @@ cmake_minimum_required(VERSION 3.9)
 
 include(${PROJECT_SOURCE_DIR}/cmake/Utils.cmake)
 
-# manually set the QT's path based on system's envronment
-set(QT_PATH ENV{QT_PATH})
-mod_option(USE_QT "USE_QT GUI" ON)
+mod_option(USE_QT "USE_QT GUI" OFF)
 
 option(test "Build all tests" ON)
 enable_testing()
@@ -24,6 +22,8 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 
 if (USE_QT)
+# manually set the QT's path based on system's envronment
+set(QT_PATH ENV{QT_PATH})
 # Find the QtWidgets library
 set(QT5Core_DIR "${QT_PATH}/lib/cmake/Qt5Core")
 find_package(Qt5Core)
