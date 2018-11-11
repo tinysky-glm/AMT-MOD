@@ -4,7 +4,9 @@ cmake_minimum_required(VERSION 3.9)
 
 include(${PROJECT_SOURCE_DIR}/cmake/Utils.cmake)
 
-mod_option(USE_QT "USE_QT GUI" OFF)
+if(APPLE)
+mod_option(USE_QT "USE_QT GUI" ON)
+endif(APPLE)
 
 option(test "Build all tests" ON)
 enable_testing()
