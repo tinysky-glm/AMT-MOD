@@ -59,6 +59,7 @@ void Frame::CreateMenus() {
   file_menu_ = menuBar()->addMenu(tr("&File"));
   open_act_ = new QAction(tr("&Open Layer..."), this);
   file_menu_->addAction(open_act_);
+  connect(open_act_, &QAction::triggered, this, &Frame::OpenLayer);
 
   // view menu
   view_menu_ = menuBar()->addMenu(tr("&View"));
@@ -92,6 +93,14 @@ void Frame::CreateMenus() {
   txt2shp_act_ = new QAction(tr("&Txt2Shp..."), this);
   tool_menu_->addAction(txt2shp_act_);
   connect(txt2shp_act_, &QAction::triggered, this, &Frame::Txt2Shp);
+}
+
+void Frame::OpenLayer() {
+  auto fileName = QFileDialog::getOpenFileName(
+              this,
+              tr("Open Layer"),
+              "/",
+              tr("Shp Files (*.shp)"));
 }
 
 void Frame::MoveLeft() {

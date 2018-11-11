@@ -21,6 +21,7 @@ class Frame : public QMainWindow {
   void CreateMapCanvas();
   void CreateMenus();
 
+  void OpenLayer();
   void MoveLeft();
   void MoveRight();
   void MoveUp();
