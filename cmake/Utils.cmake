@@ -57,7 +57,7 @@ function(mod_add_bench dir extension)
     	string(REGEX REPLACE ".*${dir}/" "" file_exe0 ${file})
    	string(REPLACE "${extension}" "" file_exe ${file_exe0})
    	add_executable(${file_exe} ${file})
-   	target_link_libraries(${file_exe} ${ARGN} benchmark)
+   	target_link_libraries(${file_exe} ${ARGN})
     endforeach()
 endfunction()
 

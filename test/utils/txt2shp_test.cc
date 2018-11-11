@@ -2,7 +2,7 @@
  * \file shp_helper_test.cc
  * \desc The shp helper test unit
  */
-#include "mod/utils/shp_helper.h"
+#include "mod/utils/txt2shp.h"
 
 #include "gtest/gtest.h"
 

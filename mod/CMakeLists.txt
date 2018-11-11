@@ -1,7 +1,7 @@
 file(GLOB_RECURSE SOURCE
     "utils/*.cc")
 add_library(amt_mod ${SOURCE})
-target_link_libraries(amt_mod pthread m)
+target_link_libraries(amt_mod shapelib pthread m)
 
 file(GLOB_RECURSE GUI_SOURCE
     "gui/*.cc")
