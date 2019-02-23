@@ -1,5 +1,9 @@
 file(GLOB_RECURSE SOURCE
-    "utils/*.cc")
+    "common/*.cc"
+    "utils/*.cc"
+    "storage/*.cc"
+    "algorithm/*.cc"
+)
 add_library(amt_mod ${SOURCE})
 target_link_libraries(amt_mod shapelib pthread m)
 
