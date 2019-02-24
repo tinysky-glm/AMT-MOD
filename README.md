@@ -8,7 +8,7 @@ AMT-MOD is an Analysis and Mining Tool for Moving Object Data.
 
 ## Installation from source
 
-Download from project homepage. https://github.com/mod-sys/AMT-MOD.git
+Download from project homepage. https://github.com/tinysky-glm/AMT-MOD.git
 
 ### Prerequisites
 
