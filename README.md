@@ -18,8 +18,9 @@ Download from project homepage. https://github.com/tinysky-glm/AMT-MOD.git
 
 ```bash
   > mkdir build
+  > cd build
   > cmake ../
-  > make install
+  > make
 ```
 
 
