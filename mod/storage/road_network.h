@@ -23,8 +23,14 @@ class RoadNetwork {
     return nodes_;
   }
 
+  const std::vector<mod_int_t>& link_list(size_t index) const {
+    return link_lists_[index];
+  }
+
  protected:
+  // point0 point1 point2
   std::vector<Point> nodes_;
+  // [[1, 2], [0], [0]]
   std::vector<std::vector<mod_int_t>> link_lists_; 
 };
 
