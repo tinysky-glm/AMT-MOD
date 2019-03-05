@@ -3,8 +3,8 @@
  * \brief The trajectory of moving object, such as taxi.
  */
 #include "mod/storage/trajectory.h"
-use namespace mod;
-use namespace std;
+using  namespace mod;
+using  namespace std;
 
 Trajectory::Trajectory(string& file){
     ifstream infile;
