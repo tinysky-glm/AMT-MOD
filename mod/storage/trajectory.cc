@@ -18,11 +18,11 @@ Trajectory::Trajectory(string& file){
          string s;
          int i=0;
          while (iss >> s){
-            a[i]=s;
+            a[i]=aotf(s.c_str());
             i++;
          }
          p.lat = a[1];
          p.lon = a[2];
-         nodes.push_back(p);
+         nodes[a[0]]=p;
      }
 }
