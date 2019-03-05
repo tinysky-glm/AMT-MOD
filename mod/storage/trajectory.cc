@@ -3,19 +3,30 @@
  * \brief The trajectory of moving object, such as taxi.
  */
 #include "mod/storage/trajectory.h"
-using  namespace mod;
-using  namespace std;
+#include <vector>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <cstdlib>
+#include <sstream>
 
-Trajectory::Trajectory(string& file){
-    ifstream infile;
+using  namespace mod;
+
+
+Trajectory::Trajectory(const std::string& file){
+    std::ifstream infile;
     vector<Point> nodes;
     infile.open(file.c_str());
+    if (!infile.is_open()){
+        std::cout << "未成功打开文件" << std::endl;
+        exit(EXIT_FAILURE);
+     }
     while(getline(infile,temp, ',')) {
          Point p;
          float a[2]={0.0};
-         istringstream iss;
+         std::istringstream iss;
          iss.str(temp);
-         string s;
+         std::string s;
          int i=0;
          while (iss >> s){
             a[i]=aotf(s.c_str());
