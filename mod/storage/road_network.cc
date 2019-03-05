@@ -6,8 +6,8 @@
 
 #include <string>
 #include <vector>
-use namespace std;
-use namespace mod;
+using namespace std;
+using namespace mod;
 RoadNetwork::RoadNetwork(string& node_file,string& edge_file){
 
     ifstream infile;
