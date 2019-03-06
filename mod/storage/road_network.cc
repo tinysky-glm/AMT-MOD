@@ -36,10 +36,12 @@ RoadNetwork::RoadNetwork(const std::string& node_file,const std::string& edge_fi
      }
 
      //顶点
+     const int NODE_LENGTH = 600000;
      infile.open(node_file.c_str());
      if (!infile.is_open()){
             std:: cout << "未成功打开文件" << std::endl;
       }
+     nodes_.resize(NODE_LENGTH);
      while(getline(infile,temp)) {
          // Node p;
           float f[3]={0.0};
@@ -52,7 +54,7 @@ RoadNetwork::RoadNetwork(const std::string& node_file,const std::string& edge_fi
               i++;
           }
         Point p(f[1], f[2]);
-        nodes[int(f[0])] = p;
+        nodes_[f[0]] = p;
       }
 
 }
