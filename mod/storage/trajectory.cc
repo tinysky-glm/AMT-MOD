@@ -9,16 +9,12 @@
 #include <fstream>
 #include <cstdlib>
 #include <sstream>
-
 using  namespace mod;
-
-
 Trajectory::Trajectory(const std::string& file){
     std::ifstream infile;
     std::string temp;
-    const int TNODE_LENGTH = 3000;
-    nodes_.resize(TNODE_LENGTH);
-    //std::vector<Point> nodes;
+    const int POINTS_LENGTH = 3000;
+    points_.resize(POINTS_LENGTH);
     infile.open(file.c_str());
     if (!infile.is_open()){
         std::cout << "未成功打开文件" << std::endl;
@@ -39,6 +35,6 @@ Trajectory::Trajectory(const std::string& file){
 	 Point p(a[1], a[2]);
          //p.lat = a[1];
          //p.lon = a[2];
-         nodes_[a[0]] = p;
+         points_[a[0]] = p;
      }
 }
