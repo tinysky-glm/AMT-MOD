@@ -43,7 +43,11 @@ namespace mod{
     };
     class Index{
     public:
-        Index();
+        Index(const std::vector<Point>& points);
+
+        // 外部接口....
+        std::vector<int> Search(const Point& point, float radis);
+#if 0
         //初始化路径,传一个起点边缘
         void initPath(struct Edge *edge);
         //顶点下标即为索引，建立对应边缘的索引,通过link_list(size_t index)
@@ -52,6 +56,7 @@ namespace mod{
         struct SegTrajectory getSegTrajectory(int index);
         //获取轨迹片段向量pi到p i+1
         struct SegTrajectory getSegTrajectory(int index);
+#endif
     };
 }
 

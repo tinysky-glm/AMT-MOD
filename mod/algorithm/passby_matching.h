@@ -14,7 +14,16 @@
 
      class PassbyMatching{
         public:
-            //返回点到轨迹片段的距离
+             explicit PassByMatching(const RoadNetwork& road_network);
+              //匹配轨迹点到边缘上
+              virtual std::vector<mod_int_t> getMatchingResult(const Trajectory& trajectory);
+
+        protected: 
+          void initRoadPointIndex(const RoadNetwork& road_network);
+
+
+
+              //返回点到轨迹片段的距离
         	double minDist(Point point ,struct SegTrajectory seg);
         	//返回所有距离点严格小于阈值的所有Edgey*
             vector<struct Edge*> getNearEdges(Point point,double threshold);

@@ -9,24 +9,10 @@
 
  #include <vector>
  namespace mod{
-    //匹配结果
-     struct Result{
-        struct TrajectoryNode t_point;
-        struct Edge t_edge;
-      }
-      //结果集
-      std::vector<struct Result> matching_result;
-
-      //匹配准确度
-      //（int 数组）???
-      float accuracy;
-
       class Matching{
           public:
-              Matching();
+              explicit Matching(const RoadNetwork& road_network);
               //匹配轨迹点到边缘上
-              std::vector<struct Result> getMatchingResult(std::vector<struct TrajectoryNode> trajectory,struct Edge *edge,int index);
-              //计算准确度
-              float accuracy(std::vector<struct Result> matching_result,std::vector<struct Result> truth_result);
+              virtual std::vector<mod_int_t> getMatchingResult(const Trajectory& trajectory) = 0;
           };
  }
