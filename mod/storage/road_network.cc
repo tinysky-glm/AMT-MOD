@@ -14,7 +14,7 @@ using namespace mod;
 RoadNetwork::RoadNetwork(const std::string& node_file,const std::string& edge_file){
 
     std:: ifstream infile;
-    int index;
+    int index = 0;
     std::string temp;
     //读取交叉口点
     infile.open(edge_file.c_str());  //infile按照指定路径读取txt文件
@@ -22,26 +22,33 @@ RoadNetwork::RoadNetwork(const std::string& node_file,const std::string& edge_fi
        std::cout << "未成功打开文件" <<std::endl;
        exit(EXIT_FAILURE);
      }
-    while(getline(infile,temp)) {
+     while(getline(infile,temp)) {
          int a[4]={0};//文件中4个数值
          std::stringstream iss;//istringstream读 string
          iss.str(temp);//temp 复制给 iss
          std::string s;
          int i=0;
          while (iss >> s){
-             a[i] = stoi(s);
+             a[i] = stoi(s.c_str());
              i++;
          }
        link_lists_[a[1]][a[2]] = a[3];
      }
 
      //顶点
-     const int NODE_LENGTH = 600000;
+     //const int NODE_LENGTH = 600000;
      infile.open(node_file.c_str());
      if (!infile.is_open()){
-            std:: cout << "未成功打开文件" << std::endl;
+          std:: cout << "未成功打开文件" << std::endl;
       }
-     nodes_.resize(NODE_LENGTH);
+     char c;
+     while(infile.get(c))
+     {
+          if(c='\n')
+             index++;
+     }
+     std::cout << "*******index*******=****" << index <<std::endl;
+     nodes_.resize(index+1);
      while(getline(infile,temp)) {
          // Node p;
           float f[3]={0.0};
