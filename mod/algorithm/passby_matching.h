@@ -9,30 +9,44 @@
  #include "mod/algorithm/matching.h"
 
  #include <vector>
-//#常量还没定义
+
+ #include  <string>
  namespace mod{
 
-     class PassbyMatching{
+    //带有时间戳的轨迹点
+    struct TrajectoryNode {
+    	struct Point point;
+    	int   timestamp;
+    };
+
+    //轨迹片段
+    struct SegTrajectory {
+    	int  seg_time;//经过时间
+    	int  start_seg_index;
+    	int  end_seg_index;
+    };
+
+    class PassbyMatching{
         public:
-             explicit PassByMatching(const RoadNetwork& road_network);
-              //匹配轨迹点到边缘上
-              virtual std::vector<mod_int_t> getMatchingResult(const Trajectory& trajectory);
+            explicit PassByMatching(const RoadNetwork& road_network);
+            //匹配轨迹点到边缘上
+            virtual std::vector<mod_int_t> getMatchingResult(const Trajectory& trajectory) = 0;
+            //获取轨迹片段（存在疑惑，与交叉口匹配的轨迹点有多个，用哪个作为起点和终点）
+	        ???? getTrajectorySeg(const TrajectoryNode& TNodeBegin,const TrajectoryNode& TNodeEnd);
+	        //匹配结果
+	        std::vector<string> getMatchingResult(const Trajectory& trajectory);
+	        //匹配精确度
+	        const bool getMatchingResult(std::vector<string> resultString,const std::string& output_file);
 
         protected: 
-          void initRoadPointIndex(const RoadNetwork& road_network);
+        	//标准正态分布函数计算传递概率
+        	//std::normal_distribution<double> distribution(const float& x,const float& y);
 
-
-
-              //返回点到轨迹片段的距离
-        	double minDist(Point point ,struct SegTrajectory seg);
-        	//返回所有距离点严格小于阈值的所有Edgey*
-            vector<struct Edge*> getNearEdges(Point point,double threshold);
-            //匹配距离点最近的Edge*
-            struct Edge* getNearestEdge(Point point,double &shortestDist);
+            //返回点到轨迹片段的距离
+        	const double minDist(const Point& point ,struct SegTrajectory seg);//？？？？
         	//初始化?轨迹段索引
-        	Point init(std::vector<struct TrajectoryNode> trajectory,Point point,int index)
+        	//Point init(std::vector<struct TrajectoryNode> trajectory,Point point,int index)
             //传递概率
-            int pass(std::vector<struct TrajectoryNode> trajectory,Point point,int index);
 
      }
  }
