@@ -25,44 +25,34 @@ RoadNetwork::RoadNetwork(const std::string& node_file,const std::string& edge_fi
         std:: cout << "未成功打开文件" << std::endl;
     }
     while(getline(infile,temp)) {
-        float f[3]={0.0};
-        std::istringstream iss;
-        iss.str(temp);
-        std::string s;
-        int i=0;
-        while (iss >> s){
-            f[i] = atof(s.c_str());
-            i++;
-        }
-      Point p(f[1], f[2]);
-      nodes_.push_back(p);
+	int i =0;
+	float f[2]={0.0};
+        sscanf(temp.c_str(),"%d %f %f",&i ,&f[0] ,&f[1]);
+        Point p(i, f[0], f[1]);
+        nodes_.push_back(p);
+	if(infile.eof())
+		break;
     }
 
 
     //读取交叉口点
     int index = 0;
-    //邻接矩阵初始化
-    for(int i=0;i < nodes_.size();i++) 
-    {
-        std::vector<mod_int_t> vec(nodes_.size(),0);
-        link_lists_.push_back(vec);
-    }
-    infile.open(edge_file.c_str());  //infile按照指定路径读取txt文件
-    if (!infile.is_open()){
+    std::ifstream infile1;
+    temp ="";
+    link_lists_.resize(nodes_.size());
+    infile1.open(edge_file.c_str());  //infile按照指定路径读取txt文件
+    if (!infile1.is_open()){
        std::cout << "未成功打开文件" <<std::endl;
        exit(EXIT_FAILURE);
      }
-    while(getline(infile,temp)) {
-        int a[4]={0};//文件中4个数值
-        std::stringstream iss;//istringstream读 string
-        iss.str(temp);//temp 复制给 iss
-        std::string s;
-        int i=0;
-        while (iss >> s){
-            a[i] = atoi(s.c_str());
-            i++;
-        } 
-        link_lists_[a[1]][a[2]]=1;
-        link_lists_[a[2]][a[1]]=1;
+     while(getline(infile1,temp)) {
+ 	int a = 0;//存储起点id
+	Connection conn= {0,0};//存储终点和边的id
+	sscanf(temp.c_str(),"%d %d %d %*s",&conn.edge_id,&a,&conn.point_id);        
+	//
+	printf(" *********from %d   to  %d edge %d \n",a,conn.point_id,conn.edge_id);
+	link_lists_[a].push_back(conn);
+	if(infile1.eof())
+		break;
     }
 }

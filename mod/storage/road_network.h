@@ -11,7 +11,10 @@
 #include "mod/storage/point.h"
 
 namespace mod {
-
+struct Connection{
+ mod_int_t point_id;
+ mod_int_t edge_id;
+};
 class RoadNetwork {
  public:
   explicit RoadNetwork(const std::string& node_file, const std::string& edge_file);
@@ -23,7 +26,7 @@ class RoadNetwork {
     return nodes_;
   }
 
-  const std::vector<mod_int_t>& link_list(size_t index) const {
+  const std::vector<struct Connection>& link_list(size_t index) const {
     return link_lists_[index];
   }
 
@@ -31,7 +34,8 @@ class RoadNetwork {
   // point0 point1 point2
   std::vector<Point> nodes_;
   // [[1, 2], [0], [0]]
-  std::vector<std::vector<mod_int_t>> link_lists_; 
+  std::vector<std::vector<struct Connection>> link_lists_; 
+  
 };
 
 }  // namespace mod

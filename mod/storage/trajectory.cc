@@ -19,17 +19,13 @@ Trajectory::Trajectory(const std::string& file){
         std::cout << "未成功打开文件" << std::endl;
         exit(EXIT_FAILURE);
      }
-    while(getline(infile,temp, ',')) {
-         float a[3]={0.0};
-         std::istringstream iss;
-         iss.str(temp);
-         std::string s;
-         int i=0;
-         while (iss >> s){
-            a[i]=atof(s.c_str());
-            i++;
-         }
-	 Point p(a[1], a[2]);
-         points_.push_back(p);
+    while(getline(infile,temp)) {
+    	int i = 0;//储存轨迹点下标
+        float f[2]={0.0};//存储坐标
+        sscanf(temp.c_str(),"%d%*c%f%*c%f",&i ,&f[0] ,&f[1]);
+	Point p(i, f[0], f[1]);
+        points_.push_back(p);
+        if(infile.eof())
+                break;
      }
 }
