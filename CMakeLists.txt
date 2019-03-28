@@ -35,12 +35,15 @@ set(QT5WebEngineWidgets_DIR "${QT_PATH}/lib/cmake/Qt5WebEngineWidgets")
 find_package(QT5WebEngineWidgets)
 endif()
 
+
 include_directories(
     ${PROJECT_SOURCE_DIR}/
     ${PROJECT_SOURCE_DIR}/thirdparty/
     ${Qt5Widgets_INCLUDE_DIRS}
+    /usr/local/include/spatialindex
 )
 
+link_directories(/usr/local/lib/)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fPIC -ftree-vectorize -Wcpp -O2 -g")
 
 add_subdirectory(mod)

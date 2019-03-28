@@ -5,8 +5,9 @@
 #include "mod/utils/txt2shp.h"
 #include "mod/storage/road_network.h"
 #include "mod/storage/trajectory.h"
-
-
+#include "mod/algorithm/index.h"
+#include "mod/algorithm/matching.h"
+#include "mod/algorithm/passby_matching.h"
 #include "gtest/gtest.h"
 
 namespace mod {
@@ -15,6 +16,14 @@ TEST(TestShpHelper, TestAll) {
   RoadNetwork road_net_work = RoadNetwork("../../data/WA/WA_Nodes.txt", "../../data/WA/WA_Edges.txt");
 
   Trajectory trajectory = Trajectory("../../data/traj/input_01.txt");
+ // std::vector<struct MatchingResult> results = PassByMatching(road_net_work,trajectory);
+ 
+  //Index下函数测试
+  std::vector<Point> nodes_  =road_net_work.nodes();
+  std::vector<Point> points_  =trajectory.points();
+  Index index = Index(points_);
+  Point t_point = index.Search(nodes_[706],5,500.0);
+  printf("%d****%f*****%f",t_point.index,t_point.lon,t_point.lat);
 
 /**
   //验证道路网点的获取
@@ -41,8 +50,8 @@ for(int i =0;i < link_lists_.size();i++)
 */
   
 
-
 /**
+
   //验证轨迹点的获取
   std::vector<Point> points_  =trajectory.points();
   for(int j=0;j<points_.size();j++)
