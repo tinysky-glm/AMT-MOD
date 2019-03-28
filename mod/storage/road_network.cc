@@ -50,7 +50,9 @@ RoadNetwork::RoadNetwork(const std::string& node_file,const std::string& edge_fi
 	Connection conn= {0,0};//存储终点和边的id
 	sscanf(temp.c_str(),"%d %d %d %*s",&conn.edge_id,&a,&conn.point_id);        
 	//
-	printf(" *********from %d   to  %d edge %d \n",a,conn.point_id,conn.edge_id);
+	//printf(" *********from %d   to  %d edge %d \n",a,conn.point_id,conn.edge_id);
+	link_lists_[a].push_back(conn);
+	std::swap(a,conn.point_id);
 	link_lists_[a].push_back(conn);
 	if(infile1.eof())
 		break;

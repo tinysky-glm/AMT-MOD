@@ -25,6 +25,10 @@ class RoadNetwork {
   const std::vector<Point>& nodes() const {
     return nodes_;
   }
+ /** 
+  const std::vector<struct Connection>& link_list() const {
+    return link_lists_;
+  }*/
 
   const std::vector<struct Connection>& link_list(size_t index) const {
     return link_lists_[index];
