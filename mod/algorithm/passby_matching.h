@@ -13,13 +13,21 @@
  #include  <string>
  namespace mod{
 
-    //带有时间戳的轨迹点
-    struct TrajectoryNode {
-    	struct Point point;
-    	int   timestamp;
+
+    //匹配结果
+    struct MatchingResult {
+    	int index;
+	struct Edge edge;
+	std::vector<Point> tra_points_;
     };
 
-    //轨迹片段
+    class PassbyMatching{
+        public:
+            explicit PassByMatching(const RoadNetwork& road_network);
+            
+
+    }
+/**    //轨迹片段
     struct SegTrajectory {
     	int  seg_time;//经过时间
     	int  start_seg_index;
@@ -49,4 +57,5 @@
             //传递概率
 
      }
- }
+*/
+

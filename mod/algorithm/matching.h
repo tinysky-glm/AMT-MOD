@@ -3,12 +3,17 @@
  * \desc The trajectory road-network matching algorithm.
  */
 
- #pragma once
+#pragma once
 
- #include "mod/algorithm/index.h"
- #include <vector>
+#include "mod/algorithm/index.h"
+#include <vector>
+#include <memory>
+#include "mod/storage/point.h"
+#include "SpatialIndex.h"
 
- namespace mod{
+using namespace SpatialIndex::RTree;
+
+namespace mod{
  	//边缘
     struct Edge {
     	int   edge_index;
@@ -18,13 +23,13 @@
     class Matching{
 
         public:
-	     explicit Matching(const RoadNetwork& road_network);
-	     //根据索引下标返回正确的边
-	     Edge getEdges(const mod_int_t index);
-	     //返回所有匹配的id
-	     std::vector<int> getMatchingIndex(const Point& pointBegin,const Point& pointEnd);
 	     //匹配轨迹点到边缘上（就传送一个trajectory就可以）
-	     virtual std::vector<mod_int_t> getMatchingSeg(const Trajectory& trajectory) = 0;
-    };
- }
+             virtual int getMatchingSeg(const std::unique_ptr<ISpatialIndex>& index_,const Point& start_point) = 0;
 
+        protected:
+            std::unique_ptr<IStorageManager> storage_;
+            std::unique_ptr<ISpatialIndex> index_;
+	    const std::vector<Point> * points_;
+	    const Point  tra_point_;
+    }
+}
