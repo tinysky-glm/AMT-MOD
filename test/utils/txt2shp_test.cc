@@ -1,3 +1,4 @@
+
 /*
  * \file shp_helper_test.cc
  * \desc The shp helper test unit
@@ -21,9 +22,26 @@ TEST(TestShpHelper, TestAll) {
   //Index下函数测试
   std::vector<Point> nodes_  =road_net_work.nodes();
   std::vector<Point> points_  =trajectory.points();
-  Index index = Index(points_);
-  Point t_point = index.Search(nodes_[706],5,500.0);
-  printf("%d****%f*****%f",t_point.index,t_point.lon,t_point.lat);
+  Index n_index = Index(nodes_);
+  Index p_index = Index(points_);
+/**double s = 500.0;
+ Point t_point = p_index.Search(nodes_[0],5,s);
+  printf("\n%d****%f*****%f",t_point.index,t_point.lon,t_point.lat);
+*/
+//matching下函数测试
+/**Matching m;
+int edge_id = m.getMatchingSeg(p_index,nodes_[43]);
+printf("matching下函数测试getEdge	%d",edge_id);*/
+//passBymatching下函数测试
+PassbyMatching pn;
+std::vector<int> edges = pn.getPassByMatching(p_index,road_net_work);
+for(int i = 0;i<edges.size();i++){
+	printf("passBymatching下函数测试	  %d",edges[i]);
+	
+}
+
+
+ //int edge_id = m.getMatchingSeg(n_index,points_[0]);
 
 /**
   //验证道路网点的获取
@@ -38,20 +56,16 @@ TEST(TestShpHelper, TestAll) {
 //验证道路网邻接表
 for(int i =0;i < link_lists_.size();i++)
 {
-
   std::vector<struct Connection> conns = road_net_work.link_list(i);
-
   for(int j=0;j<conns.size();j++)//遍历出发点所引出的边
   {
      printf("from %d to %d,the edge_id is %d\n",i,conns[j].point_id,conns[j].edge_id);
-
   }
 }
 */
   
 
 /**
-
   //验证轨迹点的获取
   std::vector<Point> points_  =trajectory.points();
   for(int j=0;j<points_.size();j++)
