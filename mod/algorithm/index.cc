@@ -94,7 +94,7 @@ namespace mod{
        if(abs(t_point.lon) <= 1e-15){
             std::cout << "未查询到距离交叉口最近的轨迹点" <<std::endl;
 	    Point p = Point(-3,0.0,0.0);
-printf("%d######%f####",p.index,p.lat);
+	    printf("%d######%f####",p.index,p.lat);
 	    return p;
 //            exit(EXIT_FAILURE);
         }

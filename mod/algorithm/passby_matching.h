@@ -14,21 +14,19 @@
  namespace mod{
 
 
-    /**匹配结果
+    //匹配结果
     struct MatchingResult {
-    	int index;
-	struct Edge edge;
-	std::vector<Point> tra_points_;
-    };*/
+    	int p_index;
+	int edge_id;
+    };
 
     class PassbyMatching :public Matching{
         public:
-PassbyMatching(){};
-		std::vector<int> getPassByMatching(Index& index_,const RoadNetwork& road_net_work);
+		PassbyMatching(){};
+		std::vector<struct MatchingResult> getPassByMatching(Index& index,const RoadNetwork& road_net_work);
 		//std::vector<int> getPassByMatching(const std::unique_ptr<ISpatialIndex>& index_,const RoadNetwork& road_net_work);
-            //explicit PassbyMatching(const RoadNetwork& road_network);
-            
-
+               //explicit PassbyMatching(const RoadNetwork& road_network);
+		double getMatchingAccuracy(std::vector<struct MatchingResult>& matching_results_,const std::string& file);         
     };
 }
 /**    //轨迹片段
