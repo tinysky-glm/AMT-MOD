@@ -7,26 +7,30 @@
 
  #include "mod/algorithm/index.h"
  #include "mod/algorithm/matching.h"
-
+ #include "mod/storage/trajectory.h"
  #include <vector>
 
  #include  <string>
  namespace mod{
 
 
-    //匹配结果
+    /**匹配结果
     struct MatchingResult {
     	int index;
 	struct Edge edge;
 	std::vector<Point> tra_points_;
-    };
+    };*/
 
-    class PassbyMatching{
+    class PassbyMatching :public Matching{
         public:
-            explicit PassByMatching(const RoadNetwork& road_network);
+PassbyMatching(){};
+		std::vector<int> getPassByMatching(Index& index_,const RoadNetwork& road_net_work);
+		//std::vector<int> getPassByMatching(const std::unique_ptr<ISpatialIndex>& index_,const RoadNetwork& road_net_work);
+            //explicit PassbyMatching(const RoadNetwork& road_network);
             
 
-    }
+    };
+}
 /**    //轨迹片段
     struct SegTrajectory {
     	int  seg_time;//经过时间

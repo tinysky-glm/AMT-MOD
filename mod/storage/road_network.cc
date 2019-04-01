@@ -52,8 +52,8 @@ RoadNetwork::RoadNetwork(const std::string& node_file,const std::string& edge_fi
 	//
 	//printf(" *********from %d   to  %d edge %d \n",a,conn.point_id,conn.edge_id);
 	link_lists_[a].push_back(conn);
-	std::swap(a,conn.point_id);
-	link_lists_[a].push_back(conn);
+	//std::swap(a,conn.point_id);
+	//link_lists_[a].push_back(conn);
 	if(infile1.eof())
 		break;
     }

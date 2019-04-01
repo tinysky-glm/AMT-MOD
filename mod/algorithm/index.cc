@@ -4,7 +4,7 @@
 #include "capi/sidx_impl.h"
 #include <vector>
 #include<cmath>
-
+#include "mod/storage/point.h"
 
 
 #define PI 3.14159265
@@ -27,8 +27,7 @@ namespace mod{
         double a = rad_lat1 - rad_lat2;
         double b = DEG2RAD(lon1) - DEG2RAD(lon2);
 
-        double s = 2 * asin(sqrt(pow(sin(a / 2), 2) +
-                               cos(rad_lat1) * cos(rad_lat2) * pow(sin(b / 2), 2)));
+        double s = 2 * asin(sqrt(pow(sin(a / 2), 2) + cos(rad_lat1) * cos(rad_lat2) * pow(sin(b / 2), 2)));
         s = s * EARTH_RADIUS;
         return s * 1000;
     } //获取交叉点
@@ -54,12 +53,9 @@ namespace mod{
 	Point t_point;
         ObjVisitor * visitor = new ObjVisitor;
         auto k = search_num;
-       // Point point = (*points_)[0];
         double pCoord[] = {point.lon, point.lat};
         index_->nearestNeighborQuery(k, SpatialIndex::Point(pCoord, 2), *visitor);
 
-       // int64_t number_of_results = visitor->GetResultCount();
-       // std::cout << "found " << number_of_results << " results." << std::endl;
         std::vector<SpatialIndex::IData *> & results = visitor->GetResults();
 
 	int i = 0;
@@ -75,14 +71,15 @@ namespace mod{
             //将形状转换为Point
             SpatialIndex::Point center;
             shape->getCenter(center);
+
 	    double s = lbs_distance(center.m_pCoords[0],center.m_pCoords[1],point.lon, point.lat);
-            //初始时
-	    if(i == 0 && s< threshold){	
+          //初始时
+/**	    if(i == 0 && s< threshold){	
 		float lon = (float)center.m_pCoords[0];
 		float lat = (float)center.m_pCoords[1];
                 t_point = Point((int)id,lon,lat);
-		min_dis = s;
-            }
+//		min_dis = s;
+            }*/
             //存储距离最小的点用来返回
             if(s < distance && s < threshold){
 		float lon = (float)center.m_pCoords[0];
@@ -91,12 +88,15 @@ namespace mod{
 		min_dis = s;
             }
             distance = s;
-	    i++;
+//	    i++;
 	    threshold = min_dis; 
         }
-        if(abs(t_point.lon) <= 1e-15){
+       if(abs(t_point.lon) <= 1e-15){
             std::cout << "未查询到距离交叉口最近的轨迹点" <<std::endl;
-            exit(EXIT_FAILURE);
+	    Point p = Point(-3,0.0,0.0);
+printf("%d######%f####",p.index,p.lat);
+	    return p;
+//            exit(EXIT_FAILURE);
         }
         return t_point;
     }
