@@ -12,6 +12,7 @@
  #define K_VALUE 5
  #define THRESHOLD 500.0
  namespace mod{
+
     std::vector<struct MatchingResult> PassbyMatching::getPassByMatching(Index& index,const RoadNetwork& road_net_work){
         std::vector<Point> nodes_  =road_net_work.nodes();
         //循环每一个交叉口
@@ -52,7 +53,12 @@
         }
         return matching_results_;
     }
-   
+   bool equCompare(struct MatchingResult matching ,struct MatchingResult output){
+        if(matching.p_index == output.p_index && matching.p_index == output.p_index)
+          return true;
+        else
+          return false;
+   }   
    double getMatchingAccuracy(std::vector<struct MatchingResult> matching_results_,const std::string& file){
         std::ifstream infile;
         std::string temp;
@@ -69,14 +75,27 @@
             if(infile.eof())
                     break;
         }
-	
+	int equ = 0,a_num = 0;	
+	std::vector<int>  accuracy_result_;
+	if(output_results_.size() == matching_results_.size()){
+		for(int i = 0;i<matching_results_.size();i++){
+			equ = (int)equCompare(matching_results_[i],output_results_[i]);
+			if(equ)
+				a_num++;
+			accuracy_result_.push_back(equ);	
+		}
+
+
+	}
+	double r_matching = (a_num*1.0)/ matching_results_.size();
+	/**
 	for(int i = 0;i < output_results_.size();i++){
 		struct MatchingResult o_result_ = output_results_[i];
 		printf("$$$$$%d$$$%d\n",o_result_.p_index,o_result_.edge_id);
 
 	}
-
-        return 0.0;
+*/
+        return r_matching;
 
   }
 
