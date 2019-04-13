@@ -17,17 +17,19 @@
         std::vector<Point> nodes_  =road_net_work.nodes();
         //循环每一个交叉口
         std::vector<struct MatchingResult> matching_results_;
-        int j = 0,i = 0;
+        int j = 0,i = 493014;
         while(i < nodes_.size()){
             /**以某一交叉口为例*/
             //测试
-            printf("$$$$$%d$$$",j);
+            printf("循环次数:%d\n",j);
             j++;
             //存储本次循环的结果
             struct MatchingResult re_matching_result;
             //道路边的id
             Matching m ;
+	    printf("这里是PassbyMatching方法！！\n");
             int edge_id = m.getMatchingSeg(index,nodes_[i]);
+	    printf("-------PassbyMatching方法-----end---！！\n");
             //已知交叉口，循环轨迹点找最近,找到轨迹段起点
             double threshold = THRESHOLD;
             Point start_tra_point = index.Search(nodes_[i],K_VALUE,threshold);

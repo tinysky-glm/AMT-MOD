@@ -59,12 +59,14 @@ namespace mod{
         std::vector<SpatialIndex::IData *> & results = visitor->GetResults();
 
 	int i = 0;
+	//存储获取的两点距离
+        double distance = threshold;
+	//double min_dis = 0.0;
         for (const auto * item : results) {
-            //存储获取的两点距离
-            double distance = threshold;
-	    double min_dis = 0.0;
+            
             //获取形状即交叉点的ID
             id_type id = item->getIdentifier();
+//printf("此时的id=%d\n",id);
             //获取通用形状对象
             SpatialIndex::IShape * shape;
             item->getShape(&shape);
@@ -73,28 +75,32 @@ namespace mod{
             shape->getCenter(center);
 
 	    double s = lbs_distance(center.m_pCoords[0],center.m_pCoords[1],point.lon, point.lat);
-          //初始时
+            //初始时
+	    if(s > 1000){
+		continue;
+	    }
 /**	    if(i == 0 && s< threshold){	
 		float lon = (float)center.m_pCoords[0];
 		float lat = (float)center.m_pCoords[1];
                 t_point = Point((int)id,lon,lat);
 //		min_dis = s;
             }*/
-            //存储距离最小的点用来返回
+            //存储距离最小的点用来返回,这里distance用来控制保证选出最小的距离
             if(s < distance && s < threshold){
+//TEST:printf("zhaodaol找到了!!!!\n");
 		float lon = (float)center.m_pCoords[0];
 		float lat = (float)center.m_pCoords[1];
                 t_point = Point((int)id,lon,lat);
-		min_dis = s;
+		//min_dis = s;
             }
-            distance = s;
+            distance = s;//控制distance为最小距离
 //	    i++;
-	    threshold = min_dis; 
         }
+printf("距离交叉口%d最近的轨迹点index= %d\n",point.index,t_point.index);
        if(abs(t_point.lon) <= 1e-15){
             std::cout << "未查询到距离交叉口最近的轨迹点" <<std::endl;
 	    Point p = Point(-3,0.0,0.0);
-	    printf("%d######%f####",p.index,p.lat);
+	    printf("未查询到距离交叉口最近的轨迹点--ID：%d,坐标:%f\n",p.index,p.lat);
 	    return p;
 //            exit(EXIT_FAILURE);
         }
