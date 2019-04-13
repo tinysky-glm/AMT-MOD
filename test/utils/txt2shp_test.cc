@@ -24,8 +24,8 @@ TEST(TestShpHelper, TestAll) {
   std::vector<Point> points_  =trajectory.points();
   Index n_index = Index(nodes_);
   Index p_index = Index(points_);
-/**double s = 500.0;
- Point t_point = p_index.Search(nodes_[0],5,s);
+  /**double s = 500.0;
+  Point t_point = p_index.Search(nodes_[467262],5,s);
   printf("\n%d****%f*****%f",t_point.index,t_point.lon,t_point.lat);
 */
 //matching下函数测试
@@ -34,9 +34,9 @@ int edge_id = m.getMatchingSeg(p_index,nodes_[43]);
 printf("matching下函数测试getEdge	%d",edge_id);*/
 //passBymatching下函数测试
 PassbyMatching pn;
-std::vector<int> edges = pn.getPassByMatching(p_index,road_net_work);
+std::vector<struct MatchingResult> edges = pn.getPassByMatching(p_index,road_net_work);
 for(int i = 0;i<edges.size();i++){
-	printf("passBymatching下函数测试	  %d",edges[i]);
+	printf("passBymatching下函数%d$$$$$$ %d",edges[i].p_index,edges[i].edge_id);
 	
 }
 
